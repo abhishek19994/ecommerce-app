@@ -1,0 +1,21 @@
+<%- layout('layout') -%>
+<div class ="container">
+<div class="row" style="margin-top:70px">
+
+<% for (var i=0;i<products.length;i++) {%>
+<div class="col-md-4">
+<a href="/product/<%= products[i]._id %>">
+<div class="thumbnail">
+<img src="<%= products[i].image %>" height="300" width="300" >
+<div class ="caption" style = "font-family:georgia,garamond,serif;color:Black;">
+<h3><strong> <%= products[i].name %></strong></h3>
+<p><%= products[i].category.name %></p>
+<p><%= products[i].price %></p>
+</div>
+</div>
+</a>
+</div>
+<% } %>
+
+</div>
+</div>

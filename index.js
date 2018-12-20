@@ -4,12 +4,15 @@ var ejs=require('ejs');
 const path=require('path');
 var engine=require('ejs-mate');
 var User=require('./models/user.js');
+var Category=require('./models/category');
 var router=express.Router();
 var morgan=require('morgan');
 var bodyParser=require('body-parser');
 var mongoose=require('mongoose');
 var mainRoutes=require('./routes/main');
 var userRoutes=require('./routes/user');
+var adminRoutes=require('./routes/admin');
+var apiRoutes=require('./routes/api')
 var cookieParser=require('cookie-parser');
 var flash=require('express-flash');
 var session=require('express-session');
@@ -34,10 +37,19 @@ app.use((req,res,next)=>{
 	res.locals.user=req.user;
 	next()
 })
+app.use((req,res,next)=>{
+	Category.find({},(err,categories)=>{
+		if(err){next(err)}
+		res.locals.categories=categories;
+		next();
+	})
+})
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(morgan('dev'));
 app.use(mainRoutes);
 app.use(userRoutes);
+app.use('/api',apiRoutes)
+app.use('/admin',adminRoutes);
 app.engine('ejs',engine);
 app.set('view engine', 'ejs');
 

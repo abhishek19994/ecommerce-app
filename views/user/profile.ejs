@@ -1,5 +1,17 @@
 <% - layout('layout') -%>
 
-<div style="margin-top:100px">
-<h1>Hey <%- user.profile.name -%></h1>
+<div class ="container" style="margin-top:100px">
+<div class ="row">
+<div class ="col-sm-10 col-md-10">
+<img class="img-circle img-responsive img-center" src="<%= user.profile.picture %>">
+<br />
+<h5>Name <%- user.profile.name -%></h5>
+<h5>Email <%- user.email -%></h5>
+<h5>Address <%- user.address -%></h5>
+<br/>
+<div style="margin-right:700px">
+<a href="/edit"><input type="submit" class="btn btn-lg btn-primary btn-block" value="Edit" ></input></a>
+</div>
+</div>
+</div>
 </div>

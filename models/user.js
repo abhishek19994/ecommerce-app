@@ -1,8 +1,8 @@
 var mongoose=require('mongoose');
 var bcrypt=require('bcrypt-nodejs');
+const crypto = require('crypto');
 var schema=mongoose.Schema;
 var UserSchema=new schema({
-
 email:{type:String, unique:true}, 
 password:{type:String},
 profile:{name:String,picture:{type:String,default:''}},
@@ -26,6 +26,11 @@ UserSchema.pre('save',function(next){
 	})
 })
 // this is custom method
+UserSchema.methods.gravatar=function(size){
+	if(!size){size=200}
+	var md5=crypto.createHash('md5').update(this.email).digest('hex');
+	return "https://gravatar.com/avatar/"+md5+"?s="+size+"&d=retro"
+}
 UserSchema.methods.comparePassword=function(password){
 	return bcrypt.compareSync(password,this.password);
 }

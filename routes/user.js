@@ -30,10 +30,12 @@ router.post('/signUp',(req,res,next)=>{
 	user.profile.name=req.body.name;
 	user.email=req.body.email;
 	user.password=req.body.password
+	user.profile.picture=user.gravatar()
 	User.findOne({email:req.body.email}, (err, existingUser)=>{
 		if(existingUser){req.flash('errors',existingUser.email+" is already exist");
 		return res.redirect('/signUp');}
 		else{
+
 			user.save((err)=>{if(err){return next(err)}
 				
 
@@ -55,10 +57,23 @@ router.get('/profile',(req,res,next)=>{
 
 
 	})
-router.get('/logout',(req,res)=>{
+router.get('/logout',(req,res,next)=>{
 	req.logout();
-	res.redirect('/')
-	next()
+	return res.redirect('/')
+	
 })	
-
+router.post('/edit',(req,res,next)=>{
+User.findOne({_id:req.user._id},(err,user)=>{
+if(err){return next(err)}
+if(req.body.name){user.profile.name=req.body.name}
+if(req.body.password){user.password=req.body.password}
+if(req.body.address){user.address=req.body.address}
+	req.flash('success','Successfuly edited')
+user.save((err)=>{if(err){return next(err)}})
+res.redirect('/edit')	
+})	
+})
+router.get('/edit',(req,res)=>{
+	res.render('./user/edit',{message:req.flash('success')})
+})
 module.exports=router;

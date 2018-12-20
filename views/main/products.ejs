@@ -1,0 +1,55 @@
+<%- layout('layout.ejs') -%>
+
+<div class ="top">
+ <div class="jumbotron">
+        <div class="container" >
+          <h1 class="display-3 text-center">Get your Favourite product here</h1>
+          <p class="text-center">Find many of your ecommerce's products</p>
+         <div class="row" style="margin-left: 370px">
+          <div class="col-md-6 col-md-offset-3" >
+          	<div class="input-group col-md-12">
+          		
+          		<input type="text" id="search" class="form-control input-lg" name="search_term" placeholder="Search for a product">
+          	
+          	<span class="input-group-btn">
+          		<button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+          	</span>
+          	</div>
+          </div>
+          </div>
+        </div>
+      </div>
+<div class="container">
+<div class="row" id="searchResult">
+	<% for(var i=0;i<products.length ;i++){ %>
+	<div class="col-md-4">
+<a href="/product/<%= products[i]._id %>">
+<div class="thumbnail">
+<img src="<%= products[i].image %>" height="300px" width="300px" >
+<div class ="caption" style = "font-family:georgia,garamond,serif;color:Black;">
+<h3><strong> <%= products[i].name %></strong></h3>
+<p><%= products[i].category.name %></p>
+<p><%= products[i].price %></p>
+</div>
+</div>
+</a>
+</div>
+
+	<% }%>
+	
+<ul class="pagination">
+<li>
+	<% for(var i=1;i<=pages;i++) {%>
+	<% if(i===1){%>
+	<li class="page-item"><a class="page-link" href="/"><%= i %></a></li>
+	<% }else { %>
+	<li class="page-item"><a class ="page-link" href="/page/<%= i %>"><%= i %></a></li>
+	<% }%>
+	<% }%>
+</li>
+</ul>
+
+</div>
+
+</div>
+</div>
